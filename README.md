@@ -125,6 +125,19 @@ secrets:
     file: $HOME/.docker-secrets/lexicon.env
 ```
 
+### How can I reload my services when certificates change?
+
+Whenever a certificate is updated, the `$OUTDIR/last-update` file is touched
+with a new modification time. If your service keeps a .pid file, a simple
+healthcheck will restart your service when needed:
+
+```yaml
+    healthcheck:
+      interval: 10s
+      retries: 1
+      test: test /etc/ssl/private/last-update -ot /var/run/myservice.pid
+```
+
 [1]: https://dehydrated.io/
 [2]: https://letsencrypt.org/
 [3]: https://github.com/AnalogJ/lexicon

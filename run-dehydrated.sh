@@ -29,11 +29,19 @@ source $LEXICON_ENV
 [ -n "$PROVIDER" ] || { echo "empty \$PROVIDER"; exit 1; }
 [ -n "$(bash -c 'echo -n $PROVIDER')" ] || { echo "un-exported \$PROVIDER"; exit 1; }
 
+if [ ! -f $OUTDIR/last-update ]; then
+	touch $OUTDIR/last-update
+fi
+
 while true; do
 	dehydrated --cron \
 		--hook /usr/local/bin/lexicon-hook.sh \
 		--challenge dns-01 \
 		--out $OUTDIR
+
+	if find $OUTDIR -type f -newer $OUTDIR/last-update | read; then
+		touch $OUTDIR/last-update
+	fi
 
 	sleep_for=$(datediff now "$(dateadd today +1d) 03:00" -f %Ss)
 	echo "Sleeping $sleep_for..."
