@@ -15,7 +15,7 @@ RUN chmod +x /usr/local/bin/lexicon-hook.sh
 RUN pip install -U pip wheel setuptools
 
 ARG lexicon_install="dns-lexicon"
-RUN apk --update add --virtual build-dependencies python3-dev build-base libffi-dev openssl-dev rust \
+RUN apk --update add --virtual build-dependencies python3-dev build-base libffi-dev openssl-dev cargo \
   && pip install ${lexicon_install} \
   && apk del build-dependencies
 
