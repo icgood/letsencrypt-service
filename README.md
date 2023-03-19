@@ -4,6 +4,8 @@ Docker image that creates [Let's Encrypt][2] certificates and checks them
 daily. Implemented using [dehydrated][1] with [lexicon][3] for DNS
 verification.
 
+#### [Docker Image](https://github.com/icgood/letsencrypt-service/pkgs/container/letsencrypt-service)
+
 ### Environment
 
 * `STAGING`: If `true`, use the letsencrypt staging endpoints.
